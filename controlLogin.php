@@ -31,8 +31,7 @@ if (isset($_GET["logout"])) {
     else {
         $view = $twig->render('index.twig');
     }
-    print($view);
-   
+    print($view);   
 }
 
 
@@ -48,21 +47,13 @@ if (isset($_POST['login'])) {//ALS POST LOGIN IS DOORGEGEVEN WORDEN DE LOGINGEGE
     $userSvc = new UserService();
     $loginCheck = $userSvc->checkLogin($email, $password);
 
-    if ($loginCheck == false) {
-        $view = $twig->render('index.twig');
-        print($view);
-        exit(0);
-    }
-    else {
-        $_SESSION["login"] = $loginCheck;
-        $login = $loginCheck;
-
-        $view = $twig->render('index.twig', array('login' => $login));
-        print($view);
-        exit(0);
-    }
+    if ($loginCheck == true) 
+    {
+          $_SESSION["login"] = $loginCheck;  
+    }    
 }
-
+   
+    header('Location: ' . 'index.php');
 
 
 
