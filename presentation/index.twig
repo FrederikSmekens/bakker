@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />     
+        <title>index</title>
+    </head>
+
+    <body>
+
+        {% if login %}
+
+            <p> U bent ingelogd, {{login.voornaam}} {{login.familienaam}}  <a href="controlLogin.php?logout=1" class="btn btn-large btn-success">Uitloggen</a></p>
+
+        {% else %}
+
+            <form action="controlLogin.php" method="post" class="login" id="login" name="login">
+                <label for="username">email :<input type="text" id="email" name="email" value="{{cookie}}"></label>
+                <label for="password">wachtwoord :<input type="password" id="password" name="password" value=''></label>                               
+                <input type="submit" value="login" name="login" />
+            </form>    
+            {{include ('registreer.twig')}}
+        {% endif %}    
+    
+
+</body>
+</html>
