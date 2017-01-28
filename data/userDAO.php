@@ -50,7 +50,6 @@ class UserDAO
         
         $rij = $stmt->fetch(PDO::FETCH_ASSOC);                                //haalt de rij als resultaat van de query uit de DB
         
-      
         if($rij == false)                                                       //kijkt als er effectief een rij is uit de DB gehaald,        
         {                                                                       //false wil zeggen dat de gegevens niet klopten en dus geen resultaten meegeeft
             return $login = false;                                              //login is mislukt

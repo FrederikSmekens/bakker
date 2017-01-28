@@ -23,19 +23,10 @@ else
 if (isset($_GET["logout"])) {
     $login = null;
     unset($_SESSION["login"]); //SESSION LOGIN WORDT VERWIJDERD
-    
-    if (isset($_COOKIE["username"])) { //ALS EEN COOKIE BESTAAT WORDT DIE DOORGEGEVEN NAAR DE VOLGENDE PAGINA VIA TWIG
-        $cookieUser = $_COOKIE["username"];
-        $view = $twig->render('index.twig', array('cookie' => $cookieUser));
-    }
-    else {
-        $view = $twig->render('index.twig');
-    }
-    print($view);   
 }
 
 
-if (isset($_POST['login'])) {//ALS POST LOGIN IS DOORGEGEVEN WORDEN DE LOGINGEGEVENS GECHECKT EN COOKIE AANGEPAST
+if (isset($_POST['login'])) {
     
     $email = $_POST['email'];
     unset($_COOKIE["email"]);
@@ -46,10 +37,11 @@ if (isset($_POST['login'])) {//ALS POST LOGIN IS DOORGEGEVEN WORDEN DE LOGINGEGE
 
     $userSvc = new UserService();
     $loginCheck = $userSvc->checkLogin($email, $password);
-
+    print_r($loginCheck);
+    
     if ($loginCheck == true) 
     {
-          $_SESSION["login"] = $loginCheck;  
+        $_SESSION["login"] = $loginCheck; 
     }    
 }
    

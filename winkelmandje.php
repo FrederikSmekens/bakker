@@ -34,8 +34,17 @@ if (isset($_COOKIE["email"]))
 }
 else 
 {
-    $viewIndex = $twig->render('index.twig', array('login' => $login));
+      $viewIndex = $twig->render('index.twig', array('login' => $login));
+}
+
+//controlleer of er iets in winkelmandje zit
+if (isset($_SESSION["winkelmandje"])) 
+{
+    $winkelmandje = $_SESSION["winkelmandje"];
+    $aantal = $_SESSION["aantal"];     
+    $viewIndex = $twig->render('winkelmandje.twig', array('winkelmandje' => $winkelmandje,'aantal'=>$aantal,'login' => $login));
 }
 
 print($viewIndex);
-print($viewBestelFormulier);
+
+

@@ -25,13 +25,13 @@ class UserService {
         return $user;
     }
 
-    public function checkLogin($username, $password) 
+    public function checkLogin($email, $password) 
     {
         // Verwijst naar de functie checklogin in userDAO.php voor het checken van de logingegevens
-        //$username, $password
+        //$email, $password
 
         $userDAO = new UserDAO();
-        $user = $userDAO->checkLogin($username, $password);
+        $user = $userDAO->checkLogin($email, $password);
         return $user;
     }
 

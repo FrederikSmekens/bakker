@@ -1,0 +1,20 @@
+<section id="bestel" class="container">
+{% if login %}
+
+<h1>Bestel</h1>
+
+
+
+
+<form action="controlProduct.php" method="POST">
+    {% for product in productLijst %}
+        <label for="{{product.Product}}">{{product.Product}} €{{product.Prijs}}</label>
+        <input type="number" name="{{product.ProductId}}">
+    {% endfor %} 
+    <input type="submit" name="Toevoegen" value="Toevoegen">
+</form>
+    {%endif%}
+     
+
+
+</section>
