@@ -64,36 +64,7 @@
           
     </nav>
 <section class="container">
-<h1>Winkelmandje</h1>
-
-
-{%set totaal = 0 %}
-<div class="hero-unit">
-    <ul class="list-group">
-        {% for product in winkelmandje %}
-            {% if aantal[loop.index0] %}
-            <li class="list-group-item">                
-                {{aantal[loop.index0]}}   x   {{product.Product}} 
-                <span class="badge">{% set subtotaal= aantal[loop.index0] * product.Prijs%}{{subtotaal}}</span>
-            </li>
-            {%endif%}
-            
-            {% set totaal = totaal + subtotaal %}
-            
-        {% endfor %}
-        <li class="list-group-item">
-            <span class="badge">{{ totaal }} EURO</span>
-            Totaal te betalen
-        </li>        
-    </ul>  
-    <a href="index.php#bestel" class="btn btn-large btn-success">Bestelling aanpassen</a>
-    
-    <form action="controlBetalen.php" method="GET" >
-        <label>Dag van afhaling:</label>
-        <input type="date" name="afhaaldatum"></input>
-        <input type="submit" class="btn btn-large btn-success" value="Betalen" name="Betalen">
-    </form>
-</div>     
+Bestelling succesvol doorgevoerd     
 
 
 </section>

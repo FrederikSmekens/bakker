@@ -42,9 +42,9 @@ if (isset($_SESSION["winkelmandje"]))
 {
     $winkelmandje = $_SESSION["winkelmandje"];
     $aantal = $_SESSION["aantal"];     
-    $viewIndex = $twig->render('winkelmandje.twig', array('winkelmandje' => $winkelmandje,'aantal'=>$aantal,'login' => $login));
+    $viewWinkelmandje = $twig->render('winkelmandje.twig', array('winkelmandje' => $winkelmandje,'aantal'=>$aantal,'login' => $login));
 }
 
-print($viewIndex);
+print($viewWinkelmandje);
 
 

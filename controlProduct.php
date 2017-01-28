@@ -24,9 +24,16 @@ else
 }
 
 //print bestelformulier en geef productenlijst mee
-$viewBestelFormulier = $twig->render('bestelFormulier.twig', array('productLijst' => $productLijst,'login'=>$login));
-
-
+if(isset($_SESSION["winkelmandje"]) AND isset($_SESSION["aantal"]))
+{
+    $winkelmandje = $_SESSION["winkelmandje"];
+    $aantal = $_SESSION["aantal"];
+    $viewBestelFormulier = $twig->render('bestelFormulier.twig', array('productLijst' => $productLijst,'login'=>$login,'winkelmandje'=>$winkelmandje,'aantal'=>$aantal));
+}
+else
+{
+   $viewBestelFormulier = $twig->render('bestelFormulier.twig', array('productLijst' => $productLijst,'login'=>$login)); 
+}
 
 //Bij toevoegen van nieuwe bestelling:
 if(isset($_POST["Toevoegen"]))

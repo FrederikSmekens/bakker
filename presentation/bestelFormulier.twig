@@ -1,17 +1,23 @@
 <section id="bestel" class="container">
 {% if login %}
 
-<h1>Bestel</h1>
+    <h1 class="col-sm-8 col-md-6 col-md-offset-3">Bestel</h1>
 
 
 
 
-<form action="controlProduct.php" method="POST">
+<form action="controlProduct.php" method="POST" class="col-sm-8 col-md-6 col-md-offset-3">
     {% for product in productLijst %}
-        <label for="{{product.Product}}">{{product.Product}} €{{product.Prijs}}</label>
-        <input type="number" name="{{product.ProductId}}">
+        <div class="form-group form-group-sm">
+            
+        <label for="{{product.Product}}" class="col-sm-9 control-label" >{{product.Product}} €{{product.Prijs}}</label>
+           <div class="col-sm-2">
+               <input type="number" id="{{product.Product}}" class=" form-control" name="{{product.ProductId}}" value="{{aantal[loop.index0]}}">
+           </div>
+        </div>
+       
     {% endfor %} 
-    <input type="submit" name="Toevoegen" value="Toevoegen">
+    <input type="submit" name="Toevoegen" value="Toevoegen" class="btn btn-large btn-success">
 </form>
     {%endif%}
      
