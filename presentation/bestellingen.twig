@@ -1,6 +1,11 @@
 {{include ('head.twig')}}
+{{include ('header.twig')}}
 
-  
+    <body id="page-top" class="index">
+      
+
+       
+    
  <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
@@ -31,17 +36,16 @@
                         <a href="index.php">Home</a>
                     </li>                   
                     {% if login %}
-                    {% if login.rang == '1'%}
+                    
                         <li  class="active"><a href="bestellingen.php">Bestellingen</a></li>
-                    {%else%}                    
+                                   
                     <li class="page-scroll">
                         <a href="index.php#bestel">Bestel</a>
                     </li>
                     
-                    <li class="page-scroll active">
+                    <li class="page-scroll">
                         <a href="winkelmandje.php">Winkelmandje</a>
-                    </li>
-                    {%endif %}
+                    </li>                
                     
                     <li><a href="controlLogin.php?logout=1" class="btn btn-sm">Uitloggen</a></li>
                   {%endif%}
@@ -64,37 +68,27 @@
           
     </nav>
  
-<section class="container">
-<h1>Winkelmandje</h1>
+ 
 
-
-{%set totaal = 0 %}
-<div class="hero-unit">
-    <ul class="list-group">
-        {% for product in winkelmandje %}
-            {% if aantal[loop.index0] %}
-            <li class="list-group-item">                
-                {{aantal[loop.index0]}}   x   {{product.Product}} 
-                <span class="badge">{% set subtotaal= aantal[loop.index0] * product.Prijs%}{{subtotaal}}</span>
-            </li>
-            {%endif%}
-            
-            {% set totaal = totaal + subtotaal %}
-            
-        {% endfor %}
-        <li class="list-group-item">
-            <span class="badge">{{ totaal }} EURO</span>
-            Totaal te betalen
-        </li>        
-    </ul>  
-    <a href="index.php#bestel" class="btn btn-large btn-success">Bestelling aanpassen</a>
-    
-    <form action="controlBetalen.php" method="GET" >
-        <label>Dag van afhaling:</label>
-        <input type="date" name="afhaaldatum"></input>
-        <input type="submit" class="btn btn-large btn-success" value="Betalen" name="Betalen">
-    </form>
-</div>     
+<section id="bestel" class="container">
+{% if login %}
+    {% if login.rang == '1'%}
+        {% for bestelling in bestellingen%}
+            <ul>
+                <li>{{bestelling.BestelNr}}</li>
+                <li>{{bestelling.KlantId}}</li>
+                <li>{{bestelling.Voornaam}}</li>
+                <li>{{bestelling.Familienaam}}</li>
+                <li>{{bestelling.Datum}}</li>
+                <li>{{bestelling.Product}}</li>
+                <li>{{bestelling.AantalBesteld}}</li>
+                <li>{{bestelling.Prijs}}</li>
+            </ul>            
+        {%endfor%}
+        
+        {%else%}
+    {%endif%}
+{%endif%}
 
 
 </section>

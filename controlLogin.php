@@ -30,14 +30,14 @@ if (isset($_POST['login'])) {
     
     $email = $_POST['email'];
     unset($_COOKIE["email"]);
-    setcookie("email", $email, time() + 31556926, '/');
+    setcookie("email", $email, time() + 6666666);
     $_COOKIE["email"] = $email;
     
     $password = sha1($_POST['password']);
 
     $userSvc = new UserService();
     $loginCheck = $userSvc->checkLogin($email, $password);
-    print_r($loginCheck);
+   
     
     if ($loginCheck == true) 
     {

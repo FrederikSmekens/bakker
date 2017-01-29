@@ -38,4 +38,7 @@ else
 }
 
 print($viewIndex);
-print($viewBestelFormulier);
+if (isset($viewBestelFormulier))
+    {print($viewBestelFormulier);}
+
+        

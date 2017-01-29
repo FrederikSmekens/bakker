@@ -5,31 +5,36 @@ require_once 'data/UserDAO.php';
 
 class UserService {
 
+    public function getAllUsers()
+    {
+        $userDAO = new UserDAO();
+        $allUsers = $userDAO->getAllUsers();
+        return $allUsers;
+    }
     public function registreerUser($email, $password, $voornaam, $familienaam, $adres, $postcode, $gemeente) 
     {
-        // Verwijst naar de functie registreerUser in userDAO.php voor het registreren van de user
-        // $username, $password, $email, $voornaam, $achternaam, $adres, $postcode, $telefoon, $promo
-
         $userDAO = new UserDAO();
         $user = $userDAO->registreerUser($email, $password, $voornaam, $familienaam, $adres, $postcode, $gemeente);
         return $user;
     }
 
-    public function updateUser($klantID, $username, $password, $email, $voornaam, $achternaam, $adres, $postcode, $telefoon, $promo) 
+    public function updateUser($email,$klantId,$password, $voornaam, $familienaam, $adres, $postcode, $gemeente) 
     {
-        //Verwijst naar de functie updateUser in userDAO.php voor het aanpassen van gegevens van de user
-        //$klantID, $username, $password, $email, $voornaam, $achternaam, $adres, $postcode, $telefoon, $promo
 
         $userDAO = new UserDAO();
-        $user = $userDAO->updateUser($klantID, $username, $password, $email, $voornaam, $achternaam, $adres, $postcode, $telefoon, $promo);
+        $user=$userDAO->updateUser($email,$klantId,$password, $voornaam, $familienaam, $adres, $postcode, $gemeente);
         return $user;
     }
-
+    
+    public function updateRang($klantId,$rang)
+    {
+        $userDAO = new UserDAO();
+        $user = $userDAO->updateRang($klantId,$rang);
+        return $user;
+    }
+    
     public function checkLogin($email, $password) 
     {
-        // Verwijst naar de functie checklogin in userDAO.php voor het checken van de logingegevens
-        //$email, $password
-
         $userDAO = new UserDAO();
         $user = $userDAO->checkLogin($email, $password);
         return $user;

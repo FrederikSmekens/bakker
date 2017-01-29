@@ -17,12 +17,11 @@ $productLijst = $productSvc->getProductenLijst();
 if (isset($_SESSION["login"])) 
 {
     $login = $_SESSION["login"];   
-}
-else
-{
-    $login = false;
-}
+    $rang = $login->rang;
+   
 
+if($rang !=-1)
+    {
 //print bestelformulier en geef productenlijst mee
 if(isset($_SESSION["winkelmandje"]) AND isset($_SESSION["aantal"]))
 {
@@ -59,5 +58,11 @@ if(isset($_POST["Toevoegen"]))
         if (--$count == 1)break;    //stop de lus 1 plaats voor het einde van de array
                                     //op de laatste plaats staat 'Toevoegen'
     }
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: index.php#bestel');
+}
+    }
+}
+else
+{
+    $login = false;
 }

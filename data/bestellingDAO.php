@@ -1,8 +1,8 @@
 <?php
 
 require_once 'DBConfig.php'; 
-require_once 'entities/bestelling.php';
-
+require_once 'entities/Bestelling.php';
+require_once 'entities/AlleBestellingen.php';
 class BestellingDAO{
     
     //voeg bestelling toe en geef bestelNr terug
@@ -22,4 +22,45 @@ class BestellingDAO{
     $dbh = null; 
     return $bestelNr; 
     } 
+    
+    public function getAlleBestellingen()
+    {
+        $sql = "SELECT bestellingen.BestelNr, bestellingen.KlantId,users.voornaam,users.familienaam, bestellingen.Datum, producten.Product,bestellijn.AantalBesteld, producten.Prijs
+                FROM bestellingen INNER JOIN bestellijn INNER JOIN producten INNER JOIN users
+                WHERE bestellingen.BestelNr = bestellijn.BestelNr AND bestellijn.ProductId = producten.ProductId AND users.klantId = bestellingen.KlantId  
+                ORDER BY `bestellingen`.`BestelNr` ASC";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $resultSet = $dbh->query($sql);
+        $alleBestellingen = array();
+        
+        foreach($resultSet as $rij)
+        {
+           $bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
+           array_push($alleBestellingen, $bestelling);
+        }
+        $dbh = null;
+        return $alleBestellingen;
+    }
+    
+       public function getBestellingen($klantId)
+    {
+        $sql = "SELECT bestellingen.BestelNr, bestellingen.KlantId,users.voornaam,users.familienaam, bestellingen.Datum, producten.Product,bestellijn.AantalBesteld, producten.Prijs
+                FROM bestellingen INNER JOIN bestellijn INNER JOIN producten INNER JOIN users
+                WHERE bestellingen.BestelNr = bestellijn.BestelNr AND bestellijn.ProductId = producten.ProductId AND users.klantId = bestellingen.KlantId AND users.klantId=". $klantId.
+                "ORDER BY bestellingen.BestelNr ASC";
+        
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $resultSet = $dbh->query($sql);
+        $Bestellingen = array();
+        
+        foreach($resultSet as $rij)
+        {
+           $bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
+           array_push($Bestellingen, $bestelling);
+        }
+        $dbh = null;
+        return $Bestellingen;
+    }
+    
+    
 }

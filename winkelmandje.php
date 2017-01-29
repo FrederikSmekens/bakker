@@ -20,11 +20,6 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION["login"])) 
 {
     $login = $_SESSION["login"];   
-}
-else
-{
-    $login = false;
-}
 
 if (isset($_COOKIE["email"])) 
 {
@@ -48,3 +43,9 @@ if (isset($_SESSION["winkelmandje"]))
 print($viewWinkelmandje);
 
 
+}
+else
+{
+    $login = false;
+    header('Location: index.php');
+}

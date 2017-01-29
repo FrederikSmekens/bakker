@@ -2,10 +2,10 @@
 
 class User{
 
+    private static $idMap=array();
+    public $klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente,$rang;
     
-    public $klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente;
-    
-    public function __construct($klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente){ 
+    public function __construct($klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente,$rang){ 
         //Bij aanmaken van object User worden gegevens doorgegeven en aan het object toegevoegd
            
         $this->klantId = $klantId;   
@@ -17,5 +17,15 @@ class User{
         $this->adres = $adres;
         $this->postcode = $postcode;
         $this->gemeente = $gemeente;     
+        $this->rang = $rang;   
+    }
+    
+    public static function create($klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente,$rang)
+    {
+        if(!isset(self::$idMap[$klantId])) 
+        {
+            self::$idMap[$klantId] = new User($klantId,$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente,$rang);
+        }
+        return self::$idMap[$klantId];
     }
 }

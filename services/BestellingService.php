@@ -12,4 +12,18 @@ class bestellingService {
         $bestelNr = $bestellingDAO->addBestelling($klantId, $datum);
         return $bestelNr;
     }
+    
+    public function getAlleBestellingen()
+    {
+        $bestellinDAO = new BestellingDAO();
+        $alleBestellingen = $bestellinDAO->getAlleBestellingen();
+        return $alleBestellingen;
+    }
+    
+     public function getBestellingen($klantId)
+    {
+        $bestellinDAO = new BestellingDAO();
+        $alleBestellingen = $bestellinDAO->getBestellingen($klantId);
+        return $alleBestellingen;
+    }
 }
