@@ -35,32 +35,35 @@ class BestellingDAO{
         
         foreach($resultSet as $rij)
         {
-           $bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
-           array_push($alleBestellingen, $bestelling);
+           //$bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
+           array_push($alleBestellingen, $rij);
         }
-        $dbh = null;
+        $dbh = null;      
         return $alleBestellingen;
     }
     
-       public function getBestellingen($klantId)
-    {
+    public function getBestellingen($klantId)
+    { 
         $sql = "SELECT bestellingen.BestelNr, bestellingen.KlantId,users.voornaam,users.familienaam, bestellingen.Datum, producten.Product,bestellijn.AantalBesteld, producten.Prijs
                 FROM bestellingen INNER JOIN bestellijn INNER JOIN producten INNER JOIN users
-                WHERE bestellingen.BestelNr = bestellijn.BestelNr AND bestellijn.ProductId = producten.ProductId AND users.klantId = bestellingen.KlantId AND users.klantId=". $klantId.
-                "ORDER BY bestellingen.BestelNr ASC";
+                WHERE bestellingen.BestelNr = bestellijn.BestelNr AND bestellijn.ProductId = producten.ProductId AND users.klantId = bestellingen.KlantId AND users.klantId=:klantId 
+                ORDER BY bestellingen.BestelNr ASC";
         
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
-        $resultSet = $dbh->query($sql);
-        $Bestellingen = array();
+        $stmt=$dbh->prepare($sql);      
+        $stmt->execute(array(':klantId'=>$klantId)); 
+        $resultSet=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $bestellingen = array();        
+       
         
         foreach($resultSet as $rij)
         {
-           $bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
-           array_push($Bestellingen, $bestelling);
+           //$bestelling = AlleBestellingen::create($rij["BestelNr"],$rij["KlantId"],$rij["voornaam"],$rij["familienaam"],$rij["Datum"],$rij["Product"],$rij["AantalBesteld"],$rij["Prijs"]);
+           array_push($bestellingen, $rij);
         }
-        $dbh = null;
-        return $Bestellingen;
-    }
-    
-    
+        $dbh = null;      
+       
+        return $bestellingen;
+        }   
+
 }

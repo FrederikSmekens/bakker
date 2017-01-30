@@ -18,6 +18,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+
 if (isset($_SESSION["login"])) 
 {
     $login = $_SESSION["login"];   
@@ -30,11 +31,13 @@ if (isset($_SESSION["login"]))
     } 
     else
     {
-        $klantId = $login->klantId;
+       $klantId = $login->klantId;
        $bestellingSVC = new bestellingService();
        $bestellingen = $bestellingSVC->getBestellingen($klantId);      
     }
+    
     $viewBestellingen = $twig->render('bestellingen.twig', array('login' => $login,'bestellingen'=>$bestellingen));   
+   
     print($viewBestellingen); 
        
 }

@@ -68,27 +68,50 @@
           
     </nav>
  
- 
+
 
 <section id="bestel" class="container">
-{% if login %}
-    {% if login.rang == '1'%}
-        {% for bestelling in bestellingen%}
-            <ul>
-                <li>{{bestelling.BestelNr}}</li>
-                <li>{{bestelling.KlantId}}</li>
-                <li>{{bestelling.Voornaam}}</li>
-                <li>{{bestelling.Familienaam}}</li>
-                <li>{{bestelling.Datum}}</li>
-                <li>{{bestelling.Product}}</li>
-                <li>{{bestelling.AantalBesteld}}</li>
-                <li>{{bestelling.Prijs}}</li>
-            </ul>            
+{% if login %} 
+ 
+       <table id="bestellingen" class="display dataTable">
+           <thead>
+		<tr>
+			<th>BestelNr</th>
+                        {% if login.rang == '1'%} 
+			<th>KlantId</th>
+			<th>Voornaam</th>
+                        <th>Familienaam</th>
+                         {%endif%}
+			<th>Datum</th>
+			<th>Product</th>
+                        <th>AantalBesteld</th>
+                        <th>Prijs</th>
+			
+		</tr>
+	</thead>
+           <tbody>
+        {% for bestelling in bestellingen%}  
+            <tr>
+               <td>{{bestelling.BestelNr}}</td>
+                {% if login.rang == '1'%} 
+               <td>{{bestelling.KlantId}}</td>
+               <td>{{bestelling.Voornaam}}</td>
+               <td>{{bestelling.Familienaam}}</td>
+               {%endif%}
+               <td>{{bestelling.Datum}}</td>
+               <td>{{bestelling.Product}}</td>
+               <td>{{bestelling.AantalBesteld}}</td>
+               <td>{{bestelling.Prijs * bestelling.AantalBesteld}}</td>
+            </tr>
+                    
         {%endfor%}
+           </tbody>
+        </table>
         
-        {%else%}
-    {%endif%}
 {%endif%}
-
-
 </section>
+
+<script>   
+    
+  $("#bestellingen").dataTable()
+  </script>

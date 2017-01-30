@@ -37,9 +37,12 @@ if (isset($_SESSION["winkelmandje"]))
 {
     $winkelmandje = $_SESSION["winkelmandje"];
     $aantal = $_SESSION["aantal"];     
-    $viewWinkelmandje = $twig->render('winkelmandje.twig', array('winkelmandje' => $winkelmandje,'aantal'=>$aantal,'login' => $login));
+    $viewWinkelmandje = $twig->render('winkelmandje.twig', array('winkelmandje' => $winkelmandje,'aantal'=>$aantal,'login' => $login));    
 }
-
+else
+{
+    $viewWinkelmandje = $twig->render('winkelmandje.twig', array('login' => $login));    
+}
 print($viewWinkelmandje);
 
 

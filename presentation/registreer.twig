@@ -1,42 +1,51 @@
-<form action="controlRegistreer.php" method="post" name="klantRegistreer">
+<form action="controlRegistreer.php" method="post" name="klantRegistreer" class="col-sm-8 col-md-6 col-md-offset-3">
 
-    <div>
-        <span>Email</span>
-        <input type="email" id="email" name="email" title="email">
+    <div class="form-group form-group-sm">
+        <label for="email" class="col-sm-9 control-label">Email</label>
+        <input type="email" id="email" name="email" title="email" class=" form-control">
     </div>
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" title="password">
+    {% set randomPassword = [] %}
+    {% for i in 1..6 %}
+    {% set letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}    
+    {% set numbers = '0123456789' %}
+    {% set randomCharacter = random(letters ~ numbers) %}
+    {% set randomPassword = randomPassword|merge([randomCharacter]) %}
+    {% endfor %}
+    {% set randomPassword = randomPassword|join %}
+
+    <div class="form-group form-group-sm">
+        <label for="password" class="col-sm-9 control-label">Password:</label>
+        <input type="text" readonly="readonly" id="password" name="password" title="password" value="{{ randomPassword }}" class=" form-control">
     </div>          
 
 
-    <div>
-        <label for="voornaam">Voornaam:</label>
-        <input type="text" id="voornaam" name="voornaam" title="voornaam">
+    <div class="form-group form-group-sm">
+        <label for="voornaam" class="col-sm-9 control-label">Voornaam:</label>
+        <input type="text" id="voornaam" name="voornaam" title="voornaam" class=" form-control">
     </div>
 
-    <div>
-        <label for="familienaam">Familienaam:</label>
-        <input type="text" id="familienaam" name="familienaam" title="familienaam">
+    <div class="form-group form-group-sm">
+        <label for="familienaam" class="col-sm-9 control-label">Familienaam:</label>
+        <input type="text" id="familienaam" name="familienaam" title="familienaam" class=" form-control">
     </div>
 
-    <div>
-        <label for="adres">Adres::</label>
-        <input type="text" id="adres" name="adres" title="adres">
+    <div class="form-group form-group-sm">
+        <label for="adres" class="col-sm-9 control-label">Adres::</label>
+        <input type="text" id="adres" name="adres" title="adres" class=" form-control">
     </div>
 
-    <div>
-        <label for="postcode" >Postcode:</label>
-        <input type="text" id="postcode" name="postcode" title="postcode">                                         
+    <div class="form-group form-group-sm">
+        <label for="postcode" class="col-sm-9 control-label" >Postcode:</label>
+        <input type="text" id="postcode" name="postcode" title="postcode" class=" form-control">                                         
     </div>
-    <div>
-        <label for="gemeente" >Gemeente:</label>
-        <input type="text" id="gemeente" name="gemeente" title="gemeente">                                         
+    <div class="form-group form-group-sm">
+        <label for="gemeente" class="col-sm-9 control-label">Gemeente:</label>
+        <input type="text" id="gemeente" name="gemeente" title="gemeente" class=" form-control">                                         
     </div>
-    <div>
+    <div class="form-group form-group-sm" class="col-sm-9 control-label">
 
-        <input type="submit" value="registreer" name='registreer' />
+        <input type="submit" value="registreer" name='registreer' class="btn btn-large btn-success"class=" form-control">
 
     </div>
 </form>
