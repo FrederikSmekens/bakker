@@ -40,6 +40,7 @@ if (isset($_SESSION["login"]))
 
         header("Refresh:0");
     }
+    $allUsers = false;
     
     if($rang == 1)
     {

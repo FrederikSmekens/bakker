@@ -33,7 +33,7 @@ else
 }
 
 //controlleer of er iets in winkelmandje zit
-if (isset($_SESSION["winkelmandje"])) 
+if (isset($_SESSION["winkelmandje"]) AND isset($_SESSION["aantal"]))
 {
     $winkelmandje = $_SESSION["winkelmandje"];
     $aantal = $_SESSION["aantal"];     

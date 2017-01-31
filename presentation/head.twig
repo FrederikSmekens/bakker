@@ -10,9 +10,26 @@
     <!-- Theme CSS -->
     <link href="css/freelancer.min.css" rel="stylesheet">
     
+      <!--datepicker -->
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+ <!--datatables-->
 <link href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
 
+
+  
+
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({ 
+        minDate: +1, 
+        maxDate: +3,
+        dateFormat: 'yy-mm-dd'
+    });
+        
+  } );
+  </script>
     </head>

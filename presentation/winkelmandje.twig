@@ -1,6 +1,11 @@
 {{include ('head.twig')}}
+{{include ('header.twig')}}
 
-  
+    <body id="page-top" class="index">
+      
+
+       
+    
  <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
@@ -31,17 +36,16 @@
                         <a href="index.php">Home</a>
                     </li>                   
                     {% if login %}
-                    {% if login.rang == '1'%}
-                        <li  class="active"><a href="bestellingen.php">Bestellingen</a></li>
-                    {%else%}                    
                     <li class="page-scroll">
-                        <a href="index.php#bestel">Bestel</a>
+                       <a href="index.php#bestel">Bestel</a>
                     </li>
+                    
+                    <li><a href="bestellingen.php">Bestellingen</a></li>              
+                  
                     
                     <li class="page-scroll active">
                         <a href="winkelmandje.php">Winkelmandje</a>
-                    </li>
-                    {%endif %}
+                    </li>                    
                     
                     <li><a href="controlLogin.php?logout=1" class="btn btn-sm">Uitloggen</a></li>
                   {%endif%}
@@ -87,13 +91,18 @@
             Totaal te betalen
         </li>        
     </ul>  
-    <a href="index.php#bestel" class="btn btn-large btn-success">Bestelling aanpassen</a>
+            
+   
+    <form action="controlBetalen.php" method="GET" class="left">       
+    <label class="col-sm-3 control-label">Dag van afhaling:</label>          
+    <div class="col-sm-2">
+    <input type="text" name="afhaaldatum" id="datepicker" class="form-control">
+    </div>
+    <input type="submit" class="btn btn-large btn-success" value="Betalen" name="Betalen">
     
-    <form action="controlBetalen.php" method="GET" >
-        <label>Dag van afhaling:</label>
-        <input type="date" name="afhaaldatum"></input>
-        <input type="submit" class="btn btn-large btn-success" value="Betalen" name="Betalen">
-    </form>
+       <a href="index.php#bestel" class="btn btn-large btn-success">Bestelling aanpassen</a>
+    
+</form>
 </div>     
 
 
