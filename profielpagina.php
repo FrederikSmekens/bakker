@@ -7,6 +7,7 @@
 require_once 'library/vendor/Twig/Autoloader.php';
 require_once 'services/UserService.php';
 require_once 'controlProduct.php';
+require_once 'entities/User.php';
 
 Twig_Autoloader::register();
 
@@ -20,10 +21,11 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION["login"])) 
 {
     $login = $_SESSION["login"];   
+ 
     $rang = $login->rang;
     $email = $login->email;
     $klantId = $login->klantId;
-    $password = $login->password;
+  
     if (isset($_POST["wijzigGegevens"])) 
     {
         
@@ -34,7 +36,7 @@ if (isset($_SESSION["login"]))
         $gemeente = $_POST['gemeente'];
 
         $userSvc = new UserService();
-        $user = $userSvc->updateUser($email, $klantId, $password, $voornaam, $familienaam, $adres, $postcode, $gemeente);
+        $user = $userSvc->updateUser($email, $klantId, $voornaam, $familienaam, $adres, $postcode, $gemeente);
 
         $_SESSION["login"] = $user;
 

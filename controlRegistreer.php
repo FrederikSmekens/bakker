@@ -13,7 +13,7 @@ $twig = new Twig_Environment($loader);
 if (isset($_POST['registreer'])) 
 {
     $email = $_POST['email'];
-    $password = sha1($_POST['password']);  
+    $password = $_POST['password'];  
     $voornaam = $_POST['voornaam'];
     $familienaam = $_POST['familienaam'];
     $adres = $_POST['adres'];
@@ -26,17 +26,11 @@ if (isset($_POST['registreer']))
     
     $_SESSION["login"] = $user;
     $login = $_SESSION["login"];
-    setcookie("email", $login->email, time() + 666666);
-    
-    if (isset($_COOKIE["email"])) {
-        $cookieUser = $_COOKIE["email"];
-        $view = $twig->render('index.twig', array('user' => $user, 'login' => $login, 'cookie' => $cookieUser));
-    }
-    else {
-        $view = $twig->render('index.twig', array('user' => $user, 'login' => $login));
-    }
+    setcookie("email", $email, time() + 666666);    
 
-    print($view);
+    header('Location: index.php');  
+
+
 }
 
 

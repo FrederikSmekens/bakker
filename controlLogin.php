@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
     setcookie("email", $email, time() + 6666666);
     $_COOKIE["email"] = $email;
     
-    $password = sha1($_POST['password']);
+    $password = $_POST['password'];
 
     $userSvc = new UserService();
     $loginCheck = $userSvc->checkLogin($email, $password);

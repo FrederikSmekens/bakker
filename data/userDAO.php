@@ -28,8 +28,8 @@ class UserDAO
     //registreren gebruiker
     //gegevens:$email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente
     public function registreerUser($email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente){
-    
-        
+     
+        $passwordhash = password_hash($password, PASSWORD_DEFAULT);  
         $sql = "INSERT INTO users (email,password,voornaam,familienaam,adres,postcode,gemeente)
                 values (:email,:password,:voornaam,:familienaam,:adres,:postcode,:gemeente)";
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
@@ -37,7 +37,7 @@ class UserDAO
         
         $stmt->execute(array(            
           ':email'=>$email,
-          ':password'=>  $password,
+          ':password'=>  $passwordhash,
           ':voornaam'=>$voornaam,
           ':familienaam'=>$familienaam,
           ':adres'=>$adres,
@@ -55,32 +55,29 @@ class UserDAO
         // Kijken als de inloggegevens kloppen, zoja worden de gegevens van die gebruiker doorgegeven
         // $username, $password      
          
-        $sql = "SELECT klantId,email,password,voornaam,familienaam,adres,postcode,gemeente,rang FROM users 
-                WHERE email = :email AND password = :password"; 
-        
+        $sql = "SELECT klantId,email,password FROM users 
+                WHERE email = :email";         
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD); 
         $stmt = $dbh->prepare($sql); 
-        $stmt->execute(array(
-          ':email' => $email,
-          ':password' => $password
-        )); 
-        
+        $stmt->execute(array(':email' => $email));       
         $rij = $stmt->fetch(PDO::FETCH_ASSOC);                                  //haalt de rij als resultaat van de query uit de DB
+        $dbPassword = $rij['password'];
+        $isJuisteWachtwoord = password_verify($password, $dbPassword);   
         
-        if($rij == false)                                                       //kijkt als er effectief een rij is uit de DB gehaald,        
-        {                                                                       //false wil zeggen dat de gegevens niet klopten en dus geen resultaten meegeeft
+        if($isJuisteWachtwoord == false)                                                          
+        {                                                                      
             return $login = false;                                              //login is mislukt
         }
         else
-        {  //maakt nieuw object user aan met al zijn gegevens uit de rij apart doorgegeven 
-            $user = new user($rij["klantId"],$rij["email"], $rij["password"], $rij["voornaam"], $rij["familienaam"], $rij["adres"], $rij["postcode"], $rij["gemeente"],$rij["rang"]);
+        { 
+            $user = $this->makeLoginSession($email);
             return $user; //doorgeven van het object voor verder gebruik
         }
         
         $dbh = null; //verbreken van connectie met DB
     }
     
-    public function updateUser($email,$klantId,$password, $voornaam, $familienaam, $adres, $postcode, $gemeente)
+    public function updateUser($email,$klantId, $voornaam, $familienaam, $adres, $postcode, $gemeente)
     {       
         $sql ="UPDATE users
                SET voornaam=:voornaam, familienaam=:familienaam, adres=:adres, postcode=:postcode, gemeente=:gemeente
@@ -97,9 +94,26 @@ class UserDAO
             ':gemeente' => $gemeente  
         
         ));      
-        return $this->checkLogin($email, $password);   //sessie bijwerken
+        //print $password; exit();
+        return $this->makeLoginSession($email);   //sessie bijwerken
        
         $dbh = null;      
+    }
+    
+    public function makeLoginSession($email)
+    {          
+         
+        $sql = "SELECT klantId,email,voornaam,familienaam,adres,postcode,gemeente,rang FROM users 
+                WHERE email = :email";         
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD); 
+        $stmt = $dbh->prepare($sql); 
+        $stmt->execute(array(':email' => $email));       
+        $rij = $stmt->fetch(PDO::FETCH_ASSOC);                                  //haalt de rij als resultaat van de query uit de DB
+        
+        //maakt nieuw object user aan met al zijn gegevens uit de rij apart doorgegeven 
+        $user = new user($rij["klantId"],$rij["email"], $rij["voornaam"], $rij["familienaam"], $rij["adres"], $rij["postcode"], $rij["gemeente"],$rij["rang"]);
+        return $user;      
+        
     }
     
     public function updateRang($klantId,$rang)

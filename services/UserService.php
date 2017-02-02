@@ -18,11 +18,11 @@ class UserService {
         return $user;
     }
 
-    public function updateUser($email,$klantId,$password, $voornaam, $familienaam, $adres, $postcode, $gemeente) 
+    public function updateUser($email,$klantId, $voornaam, $familienaam, $adres, $postcode, $gemeente) 
     {
 
         $userDAO = new UserDAO();
-        $user=$userDAO->updateUser($email,$klantId,$password, $voornaam, $familienaam, $adres, $postcode, $gemeente);
+        $user=$userDAO->updateUser($email,$klantId, $voornaam, $familienaam, $adres, $postcode, $gemeente);
         return $user;
     }
     
