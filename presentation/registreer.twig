@@ -1,49 +1,58 @@
+
 <form action="controlRegistreer.php" method="post" name="klantRegistreer" class="col-sm-8 col-md-6 col-md-offset-3">
 
     <div class="form-group form-group-sm">
         <label for="email" class="col-sm-9 control-label">Email</label>
-        <input type="text" id="email" name="email" title="email" class=" form-control" required>
+        <input type="text" id="email" name="email" title="email" class=" form-control" >
     </div>
-
-   {% set randomPassword = [] %}
-    {% for i in 1..6 %}
-    {% set letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}    
-    {% set numbers = '0123456789' %}
-    {% set randomCharacter = random(letters ~ numbers) %}
-    {% set randomPassword = randomPassword|merge([randomCharacter]) %}
-    {% endfor %}
-    {% set randomPassword = randomPassword|join %}
+    {% if errorEmail %}
+    <div class="alert alert-danger" role="alert">{{ errorEmail }}</div>
+   {%endif%}
    
-
     <div class="form-group form-group-sm">
         <label for="password" class="col-sm-9 control-label">Password:</label>
-        <input type="text" id="password" name="password" title="password" value="" class=" form-control" required>
-    </div>          
-
-
+        <input type="text" id="password" name="password" title="password" value="" class=" form-control" >
+    </div> 
+   
     <div class="form-group form-group-sm">
         <label for="voornaam" class="col-sm-9 control-label">Voornaam:</label>
-        <input type="text" id="voornaam" name="voornaam" title="voornaam" class=" form-control" required>
+        <input type="text" id="voornaam" name="voornaam" title="voornaam" class=" form-control" >
     </div>
-
+    {% if errorVoornaam %}
+    <div class="alert alert-danger" role="alert">{{ errorVoornaam }}</div> 
+    {%endif%}
+    
     <div class="form-group form-group-sm">
         <label for="familienaam" class="col-sm-9 control-label">Familienaam:</label>
-        <input type="text" id="familienaam" name="familienaam" title="familienaam" class=" form-control" required>
+        <input type="text" id="familienaam" name="familienaam" title="familienaam" class=" form-control" >
     </div>
-
+    {% if errorFamilienaam %}
+    <div class="alert alert-danger" role="alert">{{ errorFamilienaam }}</div>
+    {%endif%}
+    
     <div class="form-group form-group-sm">
         <label for="adres" class="col-sm-9 control-label">Adres::</label>
-        <input type="text" id="adres" name="adres" title="adres" class=" form-control" required>
+        <input type="text" id="adres" name="adres" title="adres" class=" form-control" >
     </div>
-
+    {% if errorAdres %}
+    <div class="alert alert-danger" role="alert">{{ errorAdres }}</div>
+    {%endif%}
+     
     <div class="form-group form-group-sm">
         <label for="postcode" class="col-sm-9 control-label" >Postcode:</label>
-        <input type="text" id="postcode" name="postcode" title="postcode" class=" form-control" required>                                         
+        <input type="text" id="postcode" name="postcode" title="postcode" class=" form-control" >                                         
     </div>
+      {% if errorPostcode %}
+    <div class="alert alert-danger" role="alert">{{ errorPostcode }}</div>
+    {%endif%}
+    
     <div class="form-group form-group-sm">
         <label for="gemeente" class="col-sm-9 control-label">Gemeente:</label>
-        <input type="text" id="gemeente" name="gemeente" title="gemeente" class=" form-control" required>                                         
+        <input type="text" id="gemeente" name="gemeente" title="gemeente" class=" form-control" >                                         
     </div>
+    {% if errorGemeente %}
+    <div class="alert alert-danger" role="alert">{{ errorGemeente }}</div>
+      {%endif%}
     <div class="form-group form-group-sm" class="col-sm-9 control-label">
 
         <input type="submit" value="registreer" name='registreer' class="btn btn-large btn-success"class=" form-control">

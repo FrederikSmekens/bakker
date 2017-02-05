@@ -131,5 +131,30 @@ class UserDAO
         $dbh = null;
         
     }
+    
+    public function checkEmail($email)
+    {
+        $sql = "SELECT email FROM users WHERE email =:email";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare($sql); 
+        $stmt->execute(array(':email' => $email));       
+        $rij = $stmt->fetch(PDO::FETCH_ASSOC);                                  //haalt de rij als resultaat van de query uit de DB
+        
+        
+        if($rij)
+        {   
+//            print_r($rij);
+//            print 'true'; exit();
+            return true;
+        }
+        else
+        {
+//            print_r($rij);
+//            print 'false'; exit();
+            return false;
+        }
+        
+    }
+    
    
 } //einde class userDAO

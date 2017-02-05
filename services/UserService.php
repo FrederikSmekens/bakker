@@ -39,5 +39,13 @@ class UserService {
         $user = $userDAO->checkLogin($email, $password);
         return $user;
     }
+    
+    public function checkEmail($email)
+    {
+        $userDAO = new UserDAO();
+        $check = $userDAO->checkEmail($email);
+        return $check;
+    }
+    
 
 }
