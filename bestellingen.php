@@ -27,13 +27,15 @@ if (isset($_SESSION["login"]))
     if($rang == 1)
     {
         $bestellingSVC = new bestellingService();
-        $bestellingen = $bestellingSVC->getAlleBestellingen();      
+        $bestellingen = $bestellingSVC->getAlleBestellingen(); 
+        //print_r($bestellingen);exit();
     } 
     else
     {
        $klantId = $login->klantId;
        $bestellingSVC = new bestellingService();
-       $bestellingen = $bestellingSVC->getBestellingen($klantId);      
+       $bestellingen = $bestellingSVC->getBestellingen($klantId);
+      
     }
     
     $viewBestellingen = $twig->render('bestellingen.twig', array('login' => $login,'bestellingen'=>$bestellingen));   

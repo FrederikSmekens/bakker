@@ -37,10 +37,10 @@
                     <li><a href="bestellingen.php">Bestellingen</a></li>
                                 
                   
-                     {%if login.rang == 0%}
+                     {%if login.rang == 0%}                        
                     <li class="page-scroll">
                         <a href="winkelmandje.php">Winkelmandje</a>
-                    </li>    
+                    </li>                  
                        {%endif%}
                     
                     <li><a href="controlLogin.php?logout=1" class="btn btn-sm">Uitloggen</a></li>
@@ -48,14 +48,19 @@
                     
                   
                 {% if not login %}
-                <form action="controlLogin.php" method="post" class="login" id="login" name="login">
-                <label for="username">email :</label>
-                <input type="text" id="email" name="email" value="{{cookie}}">
+                    <li>
+                <form action="controlLogin.php" method="post" class="login col-sm-12" id="login" name="login">                
+                <div class="col-xs-5"> 
+                    <input type="text" id="email" class="form-control" name="email" value="{{cookie}}" placeholder="email">   
+                </div>             
+                <div class="col-xs-5">            
+                    <input type="password" id="password" class="form-control col-xs-4" name="password" value='' placeholder="wachtwoord">
+                </div>
                 
-                <label for="password">wachtwoord :<input type="password" id="password" name="password" value=''></label>                               
-                <input type="submit" value="login" name="login" />
-            </form>  
+                <input type="submit" class="btn btn-large btn-success col-xs-2" value="login" name="login" />
+                </form>  
                 {%endif%}
+                </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
