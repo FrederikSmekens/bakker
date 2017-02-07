@@ -72,7 +72,11 @@ if (isset($_POST['registreer']))
     else 
     {            
         $email = $_POST['email'];
-        $password = $_POST['password'];  
+        
+        $userSvc = new UserService();
+        $password = makePassword();
+
+        
         $voornaam = $_POST['voornaam'];
         $familienaam = $_POST['familienaam'];
         $adres = $_POST['adres'];
@@ -84,13 +88,12 @@ if (isset($_POST['registreer']))
         $_SESSION["login"] = $user;
         $login = $_SESSION["login"];
         setcookie("email", $email, time() + 666666);    
-
+        setcookie("password",$password, time()+666666);
         header('Location: index.php');  
     }
-    
-
-
 }
 
-
-
+function makePassword($length = 6) 
+{
+    return substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+}

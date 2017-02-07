@@ -15,15 +15,37 @@ class bestellingService {
     
     public function getAlleBestellingen()
     {
-        $bestellinDAO = new BestellingDAO();
-        $alleBestellingen = $bestellinDAO->getAlleBestellingen();
+        $bestellingDAO = new BestellingDAO();
+        $alleBestellingen = $bestellingDAO->getAlleBestellingen();
         return $alleBestellingen;
     }
     
-     public function getBestellingen($klantId)
+    public function getBestellingen($klantId)
     {
-        $bestellinDAO = new BestellingDAO();
-        $alleBestellingen = $bestellinDAO->getBestellingen($klantId);
+        $bestellingDAO = new BestellingDAO();
+        $alleBestellingen = $bestellingDAO->getBestellingen($klantId);
         return $alleBestellingen;
+    }
+    
+    public function getTotaalPrijzen()
+    {
+       
+        $bestellingDAO = new BestellingDAO();
+        $totaalPrijzen = $bestellingDAO->getTotaalPrijzen();
+        return $totaalPrijzen;
+    }
+    public function getTotaalPrijzenUSer($klantId)
+    {
+       
+        $bestellingDAO = new BestellingDAO();
+        $totaalPrijzenUser = $bestellingDAO->getTotaalPrijzenUser($klantId);
+        return $totaalPrijzenUser;
+    }
+    
+    public function deleteBestelling($bestelNr)
+    {
+        $bestellingDAO = new BestellingDAO();
+        $bestellingDAO->deleteBestelling($bestelNr);
+            
     }
 }

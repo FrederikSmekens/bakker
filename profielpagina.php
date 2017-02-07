@@ -13,7 +13,7 @@ Twig_Autoloader::register();
 
 $loader = new Twig_Loader_Filesystem('presentation');
 $twig = new Twig_Environment($loader);
-
+$twig->addFilter('var_dump', new Twig_Filter_Function('var_dump')); //voor debuggen in twig bv: {{ my_variable | var_dump }}
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -21,11 +21,10 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION["login"])) 
 {
     $login = $_SESSION["login"];   
- 
     $rang = $login->rang;
     $email = $login->email;
-    $klantId = $login->klantId;
-  
+    $klantId = $login->klantId;  
+
     if (isset($_POST["wijzigGegevens"])) 
     {
         
@@ -41,9 +40,10 @@ if (isset($_SESSION["login"]))
         $_SESSION["login"] = $user;
 
         header("Refresh:0");
-    }
-    $allUsers = false;
+    }   
     
+    
+    $allUsers = false; 
     if($rang == 1)
     {
         $userSvc = new UserService();
@@ -54,7 +54,8 @@ if (isset($_SESSION["login"]))
             $count = count($_POST);    
             foreach ($_POST as $key => $value) 
             {
-            //print $key . '=>' . $value."<br>";
+            print $key . '=>' . $value."<br>";                      
+               
             $userSvc = new UserService();
             $user = $userSvc->updateRang($key,$value);
             
@@ -63,9 +64,55 @@ if (isset($_SESSION["login"]))
             }  
             header("Refresh:0");
         } 
-    } 
+    }
     
-    $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers));   
+    $errorPassword='';
+    $passwordSucces = '';   
+    if(isset($_POST["wijzigPassword"]))
+    {
+        $oudPassword    = $_POST["oudpassword"];
+        $nieuwPassword  = $_POST["nieuwpassword"];
+        $nieuwPassword2 = $_POST["nieuwpassword2"];
+        
+        $userSvc = new UserService();
+        $loginCheck = $userSvc->checkLogin($email, $oudPassword);
+        
+        //var_dump($loginCheck); exit();
+        if($loginCheck==true)
+        {          
+            if ($nieuwPassword == $nieuwPassword2) 
+            {          
+                unset($_COOKIE['password']);
+                setcookie("password", "", time()-3600);
+                $userSvc = new UserService();
+                $userSvc->updatePassword($klantId, $nieuwPassword);
+                $errorPassword='';
+                $passwordSucces = 'wachtwoord successvol gewijzigd';
+            }
+            else
+            {
+               $errorPassword = 'wachtwoorden komen niet overeen'; 
+            }
+        }
+        else 
+        {
+            $errorPassword = 'verkeerde wachtwoord';
+        }
+        
+    }
+    
+    if(isset($_COOKIE["password"]))
+    {
+        $cookiePassword = $_COOKIE["password"];
+        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'cookiepassword'=>$cookiePassword,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces));   
+    }
+    else 
+    {
+        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces));   
+    }
+    
+  
+
     print($viewProfiel);    
 }
 else

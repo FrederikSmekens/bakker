@@ -2,7 +2,7 @@
 {{include ('navigatie.twig')}}
 <section class="col-sm-12">
 
-
+    <!-- wijzig gegevens -->
         <form name="wijzig" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
             <div class="form-group form-group-sm">
                 <label name="email" class="col-sm-12 control-label">email :{{login.email}}</label>                
@@ -47,15 +47,41 @@
             <input type="submit" value="wijzig gegevens" class="btn btn-large btn-success" name="wijzigGegevens" />
             </div>
         </form> 
+     
+        <!-- wijzig wachtwoord -->
+        
+        <form name="wijzigPassword" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
+            {%if passwordSucces %} <div class="alert alert-info" role="alert">{{passwordSucces}}</div> {%endif%}
+            {%if errorPassword %} <div class="alert alert-danger" role="alert">{{errorPassword}}</div>{%endif%}
+            <div class="form-group">
+                <label for="oudpassword" class="col-sm-5 control-label">Oud wachtwoord:</label>
+                <div class="col-sm-7">
+                <input type="password" id="oudpassword" class="form-control" name="oudpassword" value="{{ cookiepassword }}">
+                </div>
+            </div>
                 
-                <form>
-                    
-                </form>
+            <div class="form-group">
+                <label for="nieuwpassword" class="col-sm-5 control-label">Nieuw wachtwoord:</label>
+                <div class="col-sm-7">
+                <input type="password" id="nieuwpassword" class="form-control" name="nieuwpassword">
+                </div>
+            </div>
+                
+            <div class="form-group">
+                <label for="nieuwpassword2" class="col-sm-5 control-label">Typ wachtwoord opnieuw:</label>
+                <div class="col-sm-7">
+                <input type="password" id="nieuwpassword2" class="form-control" name="nieuwpassword2">
+                </div>
+            </div>           
+            <input type="submit" value="wijzig wachtwoord" class="btn btn-large btn-success" name="wijzigPassword" />
+        </form>
       
     </section>
-               
+                      
+             
                 
     <!-- admin section -->
+    {%if login.rang == '1'%}
     {%if allusers %}
     <section class="col-sm-12 col-md-offset-3">
         <form name="wijzigrang" method="POST" action="">
@@ -63,7 +89,7 @@
                 {%for klant in allusers%}     
                     {%if klant.klantId != login.klantId%} <!-- zodat je jezelf niet per ongelijk kan blokkeren -->
                     <div class="form-group">
-                        
+                       
                         <label class="col-lg-5" for={{klant.klantId}}>{{klant.email}}</label>
                         <input type="hidden" name={{klant.klantId}} value="0">
                         <input type="checkbox" name={{klant.klantId}} value="-1"{%if klant.rang ==-1%} checked="checked"{%endif%}>                 
@@ -71,14 +97,14 @@
                     </div>
                     {%endif%}
                 {% endfor %}                
-                <input type="submit" value="blokkeer geselecteerde" name="wijzigRang"/>
+                <input type="submit" value="blokkeer geselecteerde" class="btn btn-large btn-success" name="wijzigRang"/>
          </form>
     </section>
-    {%endif%}
-    
+    {%endif%}    
     <section>
+       
     </section>
-
+ {%endif%}
 
 
 

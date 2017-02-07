@@ -22,7 +22,7 @@ else
 
 if (isset($_GET["logout"])) {
     $login = null;
-    unset($_SESSION["login"]); //SESSION LOGIN WORDT VERWIJDERD
+    unset($_SESSION["login"]); //SESSION LOGIN WORDT VERWIJDERD    
 }
 
 

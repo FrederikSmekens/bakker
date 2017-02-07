@@ -25,4 +25,13 @@ class BestellijnDAO{
             $teller++;  
         }   
     } 
+    
+   public function deleteBestellijn($bestelNr)
+    {
+        $sql="delete from bestellijn where bestelNr=:bestelNr";
+        $dbh=new PDO(DBCONFIG::$DB_CONNSTRING,DBCONFIG::$DB_USERNAME,DBCONFIG::$DB_PASSWORD);
+        $stmt=$dbh->prepare($sql);
+        $stmt->execute(array(':bestelNr'=>$bestelNr));
+        $dbh=null;
+    }
 }

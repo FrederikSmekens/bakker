@@ -16,7 +16,7 @@ class UserDAO
         $allUsers = array();
         foreach($resultSet as $rij)
         {
-            $user = User::create($rij["klantId"],$rij["email"], $rij["password"], $rij["voornaam"], $rij["familienaam"], $rij["adres"], $rij["postcode"], $rij["gemeente"],$rij["rang"]);
+            $user = User::create($rij["klantId"],$rij["email"],$rij["voornaam"], $rij["familienaam"], $rij["adres"], $rij["postcode"], $rij["gemeente"],$rij["rang"]);
  
             array_push($allUsers, $user);
         }
@@ -44,7 +44,7 @@ class UserDAO
           ':postcode'=>$postcode,
           ':gemeente'=>$gemeente,
           ));          
-     
+        
         $user = $this->checkLogin($email, $password);                           //check als de toevoeging succesvol is gebeurd door de nieuwe gegevens te gebruiken voor login
         $dbh = null;
         return $user;  
@@ -154,7 +154,21 @@ class UserDAO
             return false;
         }
         
-    }
+    }   
     
+    public function updatePassword($klantId,$nieuwPassword)
+    {
+        $sql = "UPDATE users 
+                SET password=:password
+                WHERE klantId=:klantId";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare($sql);
+        
+        $stmt->execute(array(
+          ':klantId'=>$klantId,
+          ':password'=>password_hash($nieuwPassword,PASSWORD_DEFAULT)
+        ));
+        $dbh=null;
+    }
    
 } //einde class userDAO

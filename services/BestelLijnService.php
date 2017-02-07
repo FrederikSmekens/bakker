@@ -9,4 +9,11 @@ class BestellijnService {
         $bestellijnDAO = new BestellijnDAO();
         $bestellijnDAO->addBestellijn($bestelNr, $winkelmandje, $aantal);  
     }
+    
+    public function deleteBestellijn($bestelNr)
+    {
+        $bestellijnDAO = new BestellijnDAO();
+        $bestellijnDAO->deleteBestellijn($bestelNr);
+            
+    }
 }

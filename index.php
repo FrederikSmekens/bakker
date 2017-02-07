@@ -29,7 +29,17 @@ else
 if (isset($_COOKIE["email"])) 
 {
     $cookieUser = $_COOKIE["email"];
-    $viewIndex = $twig->render('index.twig', array('login' => $login, 'cookie' => $cookieUser));
+    if(isset($_COOKIE["password"]))
+    {
+        $cookiePassword = $_COOKIE["password"];
+        $viewIndex = $twig->render('index.twig', array('login' => $login, 'cookie' => $cookieUser, 'cookiepassword' => $cookiePassword)); 
+    }
+    else 
+    {
+        $viewIndex = $twig->render('index.twig', array('login' => $login, 'cookie' => $cookieUser));
+    }
+    
+    
     
 }
 else 

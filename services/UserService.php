@@ -46,6 +46,11 @@ class UserService {
         $check = $userDAO->checkEmail($email);
         return $check;
     }
-    
-
+       
+  public function updatePassword($klantId,$nieuwPassword)
+    {
+        $nieuwPassword;
+        $userDAO = new UserDAO();         
+        $userDAO->updatePassword($klantId,$nieuwPassword); 
+    }
 }

@@ -1,10 +1,59 @@
 {{include ('head.twig')}}
-{{include ('navigatie.twig')}}
+{{include ('navigatie.twig')}}      
 
-
-<section id="bestel" class="container">
 {% if login %} 
- 
+<section class="container">
+    <h1>Bestellingen</h1>
+ <table id="totaalPrijs" class="display dataTable" role="grid">
+           <thead>
+		<tr>
+                   
+			<th>BestelNr</th>
+                        {% if login.rang == '1'%} 
+			<th>KlantId</th>
+			<th>Voornaam</th>
+                        <th>Familienaam</th>
+                         {%endif%}
+			<th>Datum</th>                       
+                        <th>Prijs</th>
+                        <th> Annuleer bestelling</th>
+			
+		</tr>
+	</thead>
+           <tbody>
+        {% set newArray = [] %}
+        {% for bestelling in bestellingen%}  
+            {% if bestelling.BestelNr not in newArray %}
+            <tr>
+            
+               <td>{{bestelling.BestelNr}}</td>
+                {% if login.rang == '1'%} 
+               <td>{{bestelling.KlantId}}</td>
+               <td>{{bestelling.voornaam}}</td>
+               <td>{{bestelling.familienaam}}</td>
+               {%endif%}
+               <td>{{bestelling.Datum}}</td>             
+            
+               <td>          
+                   {{totaalPrijzen[(bestelling.BestelNr)]}}
+               </td>              
+                   <td class="col-sm-1">
+                   <form action="" method="post" name="annuleerBestelling">
+                       <input type="hidden" name="bestelNr" value="{{bestelling.BestelNr}}"/>
+                   <input type="submit"  value="x" name='annuleerBestelling' class="btn btn-large btn-success" class=" form-control">
+                   </form>                   
+               </td>
+            </tr>                  
+                  {% set newArray = newArray|merge([bestelling.BestelNr]) %}
+                  {% endif %}
+        {%endfor%}
+           </tbody>
+        </table> 
+</section>
+           
+           
+<section class="container">
+    <h1>Bestelde producten</h1>
        <table id="bestellingen" class="display dataTable">
            <thead>
 		<tr>
@@ -17,7 +66,9 @@
 			<th>Datum</th>
 			<th>Product</th>
                         <th>AantalBesteld</th>
-                        <th>Prijs</th>
+                        <th>Individuele prijs</th>
+                        <th>Totale prijs</th>
+           
 			
 		</tr>
 	</thead>
@@ -33,17 +84,31 @@
                <td>{{bestelling.Datum}}</td>
                <td>{{bestelling.Product}}</td>
                <td>{{bestelling.AantalBesteld}}</td>
-               <td>{{bestelling.Prijs * bestelling.AantalBesteld}}</td>
-            </tr>
-                    
+               <td>{{bestelling.Prijs}}</td>
+               <td>{{bestelling.Prijs * bestelling.AantalBesteld}}</td>           
+            </tr>                    
         {%endfor%}
            </tbody>
-        </table>
-        
+        </table> 
+
+       
 {%endif%}
+   
 </section>
 
 <script>   
     
-  $("#bestellingen").dataTable()
+  $('#totaalPrijs').DataTable( {
+           
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "displayLength": 25,
+    });
+        
+  $("#bestellingen").dataTable(
+        {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "displayLength": 25,
+        }
+  );
+
   </script>
