@@ -1,6 +1,7 @@
 {{include ('head.twig')}}
 {{include ('navigatie.twig')}}
 <section class="col-sm-12">
+    {%if login.rang == '0'%}
     <!-- wijzig gegevens -->
         <form name="wijzig" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">    
             <h1>Gegevens</h1>
@@ -47,7 +48,7 @@
             <input type="submit" value="wijzig gegevens" class="btn btn-large btn-success" name="wijzigGegevens" />
             </div>
         </form> 
-     
+     {%endif%}
         <!-- wijzig wachtwoord -->
         
         <form name="wijzigPassword" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
