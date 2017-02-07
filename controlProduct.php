@@ -27,7 +27,8 @@ if(isset($_SESSION["winkelmandje"]) AND isset($_SESSION["aantal"]))
 {
     $winkelmandje = $_SESSION["winkelmandje"];
     $aantal = $_SESSION["aantal"];
-    $viewBestelFormulier = $twig->render('bestelFormulier.twig', array('productLijst' => $productLijst,'login'=>$login,'winkelmandje'=>$winkelmandje,'aantal'=>$aantal));
+    $toevoegenSucces = 'Producten aan winkelmandje toegevoegd';
+    $viewBestelFormulier = $twig->render('bestelFormulier.twig', array('productLijst' => $productLijst,'login'=>$login,'winkelmandje'=>$winkelmandje,'aantal'=>$aantal,'toevoegenSucces'=>$toevoegenSucces));
 }
 else
 {

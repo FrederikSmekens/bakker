@@ -1,9 +1,9 @@
 {{include ('head.twig')}}
 {{include ('navigatie.twig')}}
 <section class="col-sm-12">
-
     <!-- wijzig gegevens -->
-        <form name="wijzig" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
+        <form name="wijzig" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">    
+            <h1>Gegevens</h1>
             <div class="form-group form-group-sm">
                 <label name="email" class="col-sm-12 control-label">email :{{login.email}}</label>                
             </div>
@@ -51,6 +51,7 @@
         <!-- wijzig wachtwoord -->
         
         <form name="wijzigPassword" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
+            <h1>Wachtwoord wijzigen</h1>
             {%if passwordSucces %} <div class="alert alert-info" role="alert">{{passwordSucces}}</div> {%endif%}
             {%if errorPassword %} <div class="alert alert-danger" role="alert">{{errorPassword}}</div>{%endif%}
             <div class="form-group">
@@ -84,6 +85,7 @@
     {%if login.rang == '1'%}
     {%if allusers %}
     <section class="col-sm-12 col-md-offset-3">
+        <h1>Gebruikers</h1>
         <form name="wijzigrang" method="POST" action="">
             <div class="col-lg-5">email</div><div>blokkeren</div>           
                 {%for klant in allusers%}     
@@ -100,9 +102,38 @@
                 <input type="submit" value="blokkeer geselecteerde" class="btn btn-large btn-success" name="wijzigRang"/>
          </form>
     </section>
-    {%endif%}    
+    {%endif%}   
+   
     <section>
+        <form name="productToevoegen" method="POST" action="" class="col-sm-8 col-md-6 col-md-offset-3">
+            <h1>Product Beheer</h1>       
+            <div class="form-group">
+                <label for="product" class="col-sm-4 control-label">Product toevoegen:</label>
+                <div class="col-sm-5">
+                    <input type="text" id="product" class="form-control" name="product" placeholder="product" required="true">
+                </div>
+                <div class="col-sm-2">
+                    <input type="number" step="any" id="product" class="form-control" name="prijs" placeholder="€" required="true">
+                </div>
+                
+            </div>
+                   
+            <input type="submit" value="Voeg product toe" class="btn btn-large btn-success" name="productToevoegen" />
+        </form>
+    </section>
+    <section class="col-md-12 col-md-offset-3">   
+        {% for product in productLijst %}
+            <div class="col-sm-5">
+            {{product.Product}} €{{product.Prijs}}
+            </div>
+            <div class="col-sm-5">
+            <form action="" method="post" name="deleteProductfrm">
+                <input type="hidden" name="productId" value="{{product.ProductId}}"/>
+                <input type="submit"  value="x" name='deleteProduct' class="btn btn-large btn-success" class=" form-control">
+            </form>
+            </div>
        
+    {% endfor %} 
     </section>
  {%endif%}
 

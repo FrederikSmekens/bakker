@@ -16,5 +16,15 @@ class ProductService {
           return $product;
       }
 
-
+      public function addProduct($product,$prijs)
+      {
+          $productDAO = new productDAO();
+          $productDAO->addProduct($product,$prijs);
+      }
+      
+      public function deleteProduct($productId)
+      {
+          $productDAO = new productDAO();
+          $productDAO->deleteProduct($productId);
+      }
 }

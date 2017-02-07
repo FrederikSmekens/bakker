@@ -24,12 +24,12 @@
                         <a href="profielpagina.php">{{login.voornaam}} {{login.familienaam}}</a>                       
                     </li>
                     {%endif%}
-                    
+                      {% if login %} 
+                        {%if login.rang == 0%}
                     <li class="page-scroll">
                         <a href="index.php#page-top">Home</a>
                     </li>                   
-                    {% if login %} 
-                        {%if login.rang == 0%}
+                  
                     <li class="page-scroll">
                        <a href="index.php#bestel">Bestel</a>
                     </li>

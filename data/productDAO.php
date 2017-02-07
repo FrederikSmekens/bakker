@@ -40,6 +40,29 @@ class productDAO {
         $dbh = null;
         return $product;
     }
+    
+    public function addProduct($product,$prijs)
+    {
+         $sql = "INSERT INTO 
+            producten (Product,Prijs) 
+            values (:Product,:Prijs)";
+          
+    $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(
+        ':Product' => $product,
+        ':Prijs'=>$prijs       
+         )); 
+    }
+    
+    public function deleteProduct($productId)
+    {      
+        $sql="delete from producten where productId=:productId";
+        $dbh=new PDO(DBCONFIG::$DB_CONNSTRING,DBCONFIG::$DB_USERNAME,DBCONFIG::$DB_PASSWORD);
+        $stmt=$dbh->prepare($sql);
+        $stmt->execute(array(':productId'=>$productId));
+        $dbh=null;
+    }
 
 }
 

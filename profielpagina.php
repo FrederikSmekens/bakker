@@ -64,6 +64,24 @@ if (isset($_SESSION["login"]))
             }  
             header("Refresh:0");
         } 
+        
+        if(isset($_POST["productToevoegen"]))
+        {
+            $product = $_POST['product'];
+            $prijs  = $_POST['prijs'];
+            
+            $productSVC = new ProductService();
+            $productSVC -> addProduct($product,$prijs);
+        }
+        
+        if(isset($_POST['deleteProduct']))
+        {
+            $productId = $_POST['productId'];
+            
+            $productSVC = new ProductService();
+            $productSVC-> deleteProduct($productId);
+        }
+            
     }
     
     $errorPassword='';
@@ -100,15 +118,17 @@ if (isset($_SESSION["login"]))
         }
         
     }
-    
+       $productSVC = new ProductService();
+       $productLijst = $productSVC->getProductenLijst();
+   
     if(isset($_COOKIE["password"]))
     {
         $cookiePassword = $_COOKIE["password"];
-        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'cookiepassword'=>$cookiePassword,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces));   
+        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'cookiepassword'=>$cookiePassword,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces,'productLijst'=>$productLijst));   
     }
     else 
     {
-        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces));   
+        $viewProfiel = $twig->render('profiel.twig', array('login' => $login,'allusers'=>$allUsers,'errorPassword'=>$errorPassword,'passwordSucces'=>$passwordSucces,'productLijst'=>$productLijst));   
     }
     
   
