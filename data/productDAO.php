@@ -9,6 +9,9 @@ class productDAO {
 
     public function getProducten()
     {
+        /*
+        return array van Product objects
+         *          */
         $sql = "SELECT * FROM producten";
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
         $resultset = $dbh->query($sql);
@@ -27,6 +30,9 @@ class productDAO {
     {
         //print $id;
         //haalt product met prijs uit db
+        /*
+        return Product object
+         *          */
         $sql = "SELECT * 
                 FROM producten 
                 WHERE ProductId=:ProductId";

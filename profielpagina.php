@@ -44,6 +44,7 @@ if (isset($_SESSION["login"]))
     
     
     $allUsers = false; 
+    //beheerder
     if($rang == 1)
     {
         $userSvc = new UserService();
