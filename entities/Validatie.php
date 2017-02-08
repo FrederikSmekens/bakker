@@ -3,12 +3,14 @@
 class Validatie 
 {
     protected $errorHandler;
-    protected $rules = ['required','email', 'emailExists'];
+    protected $rules = ['required','email', 'emailExists','tekst', 'getal'];
     public $messages = 
     [          
         'required' => ':veld is niet ingevuld', 
         'email' => 'Dit is geen geldig e-mailadres',        
-        'emailExists' => 'Dit e-mailadres is al in gebruik'
+        'emailExists' => 'Dit e-mailadres is al in gebruik',
+        'tekst'=>':veld mag enkel tekst bevatten',
+        'getal' => ':veld mag enkel getallen bevatten'
     ];    
     
     public function __construct(ErrorHandler $errorHandler)
@@ -80,6 +82,7 @@ class Validatie
     }
 
   
+    //validatie regels
     protected function required($veld, $value,$satisfier)
     {
         return !empty(trim($value));
@@ -95,6 +98,16 @@ class Validatie
         //print $email; exit();
         $userSvc = new UserService();     
         return !($userSvc->checkEmail($email));
+    }
+    
+    protected function tekst($veld,$value,$satisfier)
+    {
+        return preg_match("/^[a-zA-Z]*$/",$value);
+    }
+    
+    protected function getal($veld,$value,$satisfier)
+    {
+        return is_numeric($value);
     }
 
 }

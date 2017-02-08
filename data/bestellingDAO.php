@@ -128,6 +128,17 @@ class BestellingDAO{
        
         return $bestellingen;
         }   
+    
+    public function getBestelDatums($klantId)
+    {
+        $sql = "SELECT Datum FROM bestellingen WHERE KlantId=:KlantId ";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $stmt=$dbh->prepare($sql);      
+        $stmt->execute(array(':KlantId'=>$klantId)); 
+        $resultSet=$stmt->fetchAll(PDO::FETCH_COLUMN);     
+  
+        return $resultSet;
+    }
         
     public function deleteBestelling($bestelNr)
     {

@@ -45,7 +45,12 @@ class bestellingService {
     public function deleteBestelling($bestelNr)
     {
         $bestellingDAO = new BestellingDAO();
-        $bestellingDAO->deleteBestelling($bestelNr);
-            
+        $bestellingDAO->deleteBestelling($bestelNr);           
+    }
+    public function getBestelDatums($klantId)
+    {
+        $bestellingDAO = new BestellingDAO();
+        $bestelDatums = $bestellingDAO->getBestelDatums($klantId);
+        return $bestelDatums;
     }
 }

@@ -27,26 +27,31 @@ if (isset($_POST['registreer']))
             
         'voornaam'=> [
             'required'=>true,
+            'tekst' => true
         ],
             
         'familienaam'=> [
             'required'=>true,
+            'tekst'=>true
         ],
             
         'adres'=> [
-            'required'=>true,
+            'required'=>true,            
         ],
             
         'postcode'=>[
             'required'=>true,
+            'getal' => true
         ],
         
         'gemeente'=>[
             'required'=>true,
+            'tekst'=>true
         ]         
             
     ]);
     
+    //als de validatie mislukt zend een error terug
     if ($validatie->fails()) 
     {        
           
@@ -69,30 +74,43 @@ if (isset($_POST['registreer']))
             
             print $view;
     }
+    
+    //validatie OK -> registreer deze gebruiker
     else 
     {            
-        $email = $_POST['email'];
+   
         
+        //maak een paswoord aan
         $userSvc = new UserService();
         $password = makePassword();
-
         
+        //haal gegevens uit de post
+        $email = $_POST['email'];
         $voornaam = $_POST['voornaam'];
         $familienaam = $_POST['familienaam'];
         $adres = $_POST['adres'];
         $postcode = $_POST['postcode'];
         $gemeente = $_POST['gemeente'];
+        
+        //registreer de gebruiker
         $userSvc = new UserService();
         $user = $userSvc->registreerUser($email,$password,$voornaam,$familienaam,$adres,$postcode,$gemeente);
 
+        //maak een sessie aan
         $_SESSION["login"] = $user;
-        $login = $_SESSION["login"];
+        
+        //maak een cookie aan van email (om te tonen in login form wanneer uitgelogd)
         setcookie("email", $email, time() + 666666);    
+        
+        //steek het willekeurig aangemaakte paswoord in een cookie zodat het later opgevraagd kan worden
         setcookie("password",$password, time()+666666);
+        
+        //ga verder naar het bestel formulier
         header('Location: index.php');  
     }
 }
 
+//maak een willekeurig paswoord aan met een lengte van 6 cijfers bestaande uit cijfers en hoofdletters
 function makePassword($length = 6) 
 {
     return substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);

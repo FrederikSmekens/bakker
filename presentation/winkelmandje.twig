@@ -4,7 +4,7 @@
  
 <section class="container">
 <h1>Winkelmandje</h1>
-
+    {%if errorDatum %} <div class="alert alert-warning" role="alert">{{errorDatum}}</div> {%endif%}
 
 {%set totaal = 0 %}
 <div class="hero-unit">

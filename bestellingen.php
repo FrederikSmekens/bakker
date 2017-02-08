@@ -26,8 +26,7 @@ if (isset($_SESSION["login"]))
     
     
     if (isset($_POST['annuleerBestelling'])) 
-    {
-      
+    {      
         //echo("<script>console.log('PHP: ".'test'."');</script>"); exit();
         $bestelNr = $_POST['bestelNr'];
         

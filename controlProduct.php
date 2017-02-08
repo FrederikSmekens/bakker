@@ -43,22 +43,30 @@ if(isset($_POST["Toevoegen"]))
     $_SESSION["aantal"] = array();          //waar productid, product,prijs en aantal besteld worden bijgehouden
     
     foreach ($_POST as $key => $value) 
-    {           
+    {      
+        //als de waarde <0 (aantal besteld v.e. product) steek het dan niet in het winkelmandje
+        if($value<0)
+        {
+            
+        }
+        else            
+        {
         //print $key."=>".$value."<br>";
         
         //haal waardes uit de tabel Producten
         $productId = $key;
         $aantal = $value;
-        $product = $productSvc->getProductById($key);
+        $product = $productSvc->getProductById($key); 
         
-        
-      
+        //steek de waardes in de sessie arrays
         array_push($_SESSION["winkelmandje"], $product);
         array_push($_SESSION["aantal"], $aantal);        
-        
+        }
         if (--$count == 1)break;    //stop de lus 1 plaats voor het einde van de array
                                     //op de laatste plaats staat 'Toevoegen'
     }
+    
+    //terug naar bestel formulier
     header('Location: index.php#bestel');
 }
     }

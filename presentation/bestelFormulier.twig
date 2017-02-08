@@ -9,12 +9,13 @@
 
 <form action="controlProduct.php" method="POST" class="col-sm-8 col-md-6 col-md-offset-3">
       {%if toevoegenSucces %} <div class="alert alert-info" role="alert">{{toevoegenSucces}}</div> {%endif%}
+
     {% for product in productLijst %}
         <div class="form-group form-group-sm">
             
         <label for="{{product.Product}}" class="col-sm-9 control-label" >{{product.Product}} €{{product.Prijs}}</label>
            <div class="col-sm-2">
-               <input type="number" id="{{product.Product}}" class=" form-control" name="{{product.ProductId}}" value="{{aantal[loop.index0]}}">
+               <input type="number" id="{{product.Product}}" min='0'class=" form-control" name="{{product.ProductId}}" value="{{aantal[loop.index0]}}">
            </div>
         </div>
        
